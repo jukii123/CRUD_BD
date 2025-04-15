@@ -59,7 +59,7 @@
             </tbody>
         </table>
         <div class="container">
-            <a href="#" class="btn btn-warning btn-sm">Agregar Producto</a>
+            <a href="Fotmularios/AgregarForm.php" class="btn btn-warning btn-sm">Agregar Producto</a>
         </div>
     </div>
     
