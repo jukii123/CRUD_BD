@@ -50,7 +50,7 @@
                         <td>
                             <a href="Formularios/EditarForm.php?Id=<?php echo $resultado['IdProducto'] ?>"
                                 class="btn btn-warning btn-sm">Editar</a>
-                            <a href="#" class="btn btn-danger btn-sm">Eliminar</a>
+                            <a href="CRUD/EliminarDatos.php?Id=<?php echo $resultado['IdProducto']?>" class="btn btn-danger">Eliminar</a>
                         </td>
 
                     </tr>

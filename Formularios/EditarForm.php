@@ -13,7 +13,7 @@
     <h1 class="text-center" style="background-color: black; color:white">EDITAR PRODUCTOS</h1>
 
     <br>
-    <form class="container">
+    <form class="container" action="../CRUD/EditarDatos.php" method="POST">
 
         <?php
         include_once("../Config/Conexion.php");
@@ -23,9 +23,11 @@
         $row = $resultado->fetch_assoc();
         ?>
 
+        <input type="Hidden" class="form-control" name="Id" value="<?php echo $row['IdProducto']; ?>">
+
         <!--TRAER DATOS CATEGORIA-->
         <label>Categorías</label>
-        <select class="form-select mb-3" name="CategoriaId">
+        <select class="form-select mb-3" aria-label="Default select example" name="Categorias">
             <option disabled>--Seleccione Categoría--</option>
             <?php
             $sql1 = "SELECT * FROM categorias WHERE Id = " . $row['CategoriaId'];
@@ -43,9 +45,10 @@
 
         <!--TRAER DATOS MARCA-->
         <label>Marcas</label>
-        <select class="form-select mb-3" name="MarcaId">
+        <select class="form-select mb-3" aria-label="Default select example" name="Marcas">
             <option disabled>--Seleccione Marca--</option>
             <?php
+            include ("../Config/Conexion.php");
             $sql3 = "SELECT * FROM marcas WHERE Id = " . $row['MarcaId'];
             $resultado3 = $conexion->query($sql3);
             $row3 = $resultado3->fetch_assoc();
