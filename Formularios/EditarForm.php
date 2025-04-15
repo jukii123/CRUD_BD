@@ -30,15 +30,15 @@
         <select class="form-select mb-3" aria-label="Default select example" name="Categorias">
             <option disabled>--Seleccione Categoría--</option>
             <?php
-            $sql1 = "SELECT * FROM categorias WHERE Id = " . $row['CategoriaId'];
+            $sql1 = "SELECT * FROM categorias WHERE id = " . $row['CategoriaId'];
             $resultado1 = $conexion->query($sql1);
             $row1 = $resultado1->fetch_assoc();
-            echo '<option selected value="' . $row1['Id'] . '">' . $row1['NombreCategoria'] . '</option>';
+            echo '<option selected value="' . $row1['id'] . '">' . $row1['NombreCategoria'] . '</option>';
 
-            $sql2 = "SELECT * FROM categorias WHERE Id != " . $row['CategoriaId'];
+            $sql2 = "SELECT * FROM categorias WHERE id != " . $row['CategoriaId'];
             $resultado2 = $conexion->query($sql2);
             while ($fila = $resultado2->fetch_array()) {
-                echo '<option value="' . $fila['Id'] . '">' . $fila['NombreCategoria'] . '</option>';
+                echo '<option value="' . $fila['id'] . '">' . $fila['NombreCategoria'] . '</option>';
             }
             ?>
         </select>
@@ -49,15 +49,15 @@
             <option disabled>--Seleccione Marca--</option>
             <?php
             include ("../Config/Conexion.php");
-            $sql3 = "SELECT * FROM marcas WHERE Id = " . $row['MarcaId'];
+            $sql3 = "SELECT * FROM marcas WHERE id = " . $row['MarcaId'];
             $resultado3 = $conexion->query($sql3);
             $row3 = $resultado3->fetch_assoc();
-            echo '<option selected value="' . $row3['Id'] . '">' . $row3['NombreMarca'] . '</option>';
+            echo '<option selected value="' . $row3['id'] . '">' . $row3['NombreMarca'] . '</option>';
 
-            $sql4 = "SELECT * FROM marcas WHERE Id != " . $row['MarcaId'];
+            $sql4 = "SELECT * FROM marcas WHERE id != " . $row['MarcaId'];
             $resultado4 = $conexion->query($sql4);
             while ($fila = $resultado4->fetch_array()) {
-                echo '<option value="' . $fila['Id'] . '">' . $fila['NombreMarca'] . '</option>';
+                echo '<option value="' . $fila['id'] . '">' . $fila['NombreMarca'] . '</option>';
             }
             ?>
         </select>
