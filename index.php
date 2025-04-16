@@ -49,8 +49,10 @@
                         <td><?php echo $resultado['Nombre'] ?></td>
                         <td>
                             <a href="Formularios/EditarForm.php?Id=<?php echo $resultado['IdProducto'] ?>"
-                                class="btn btn-warning btn-sm">Editar</a>
-                            <a href="CRUD/EliminarDatos.php?Id=<?php echo $resultado['IdProducto']?>" class="btn btn-danger">Eliminar</a>
+                                class="btn btn-warning">Editar</a>
+
+                            <a href="CRUD/EliminarDatos.php?Id=<?php echo $resultado['IdProducto'] ?>"
+                                class="btn btn-danger">Eliminar</a>
                         </td>
 
                     </tr>
