@@ -107,10 +107,7 @@
                 e.preventDefault();
                 const productId = this.getAttribute('data-id');
                 
-                // Configurar el enlace de confirmación
                 confirmDeleteButton.href = `CRUD/EliminarDatos.php?Id=${productId}`;
-                
-                // Mostrar el modal
                 confirmDeleteModal.show();
             });
         });
