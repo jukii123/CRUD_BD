@@ -51,8 +51,10 @@
                             <a href="Formularios/EditarForm.php?Id=<?php echo $resultado['IdProducto'] ?>"
                                 class="btn btn-warning">Editar</a>
 
-                            <a href="CRUD/EliminarDatos.php?Id=<?php echo $resultado['IdProducto'] ?>"
-                                class="btn btn-danger">Eliminar</a>
+                            
+                            <a href="#" 
+                                class="btn btn-danger delete-btn" 
+                                data-id="<?php echo $resultado['IdProducto'] ?>">Eliminar</a>
                         </td>
 
                     </tr>
@@ -74,6 +76,47 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq"
         crossorigin="anonymous"></script>
+
+    <!-- Modal de Confirmación -->
+    <div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="confirmDeleteModalLabel">Confirmar Eliminación</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            ¿Estás seguro de que deseas eliminar este producto?
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+            <a id="confirmDeleteButton" class="btn btn-danger">Eliminar</a>
+        </div>
+        </div>
+    </div>
+    </div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const deleteButtons = document.querySelectorAll('.delete-btn');
+        const confirmDeleteModal = new bootstrap.Modal(document.getElementById('confirmDeleteModal'));
+        const confirmDeleteButton = document.getElementById('confirmDeleteButton');
+        
+        deleteButtons.forEach(button => {
+            button.addEventListener('click', function(e) {
+                e.preventDefault();
+                const productId = this.getAttribute('data-id');
+                
+                // Configurar el enlace de confirmación
+                confirmDeleteButton.href = `CRUD/EliminarDatos.php?Id=${productId}`;
+                
+                // Mostrar el modal
+                confirmDeleteModal.show();
+            });
+        });
+    });
+    </script>
+    
 </body>
 
 </html>
