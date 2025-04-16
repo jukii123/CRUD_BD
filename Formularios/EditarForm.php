@@ -30,6 +30,7 @@
         <select class="form-select mb-3" aria-label="Default select example" name="Categorias">
             <option disabled>--Seleccione Categoría--</option>
             <?php
+            include ("../Config/Conexion.php");
             $sql1 = "SELECT * FROM categorias WHERE Id = " . $row['CategoriaId'];
             $resultado1 = $conexion->query($sql1);
             $row1 = $resultado1->fetch_assoc();
