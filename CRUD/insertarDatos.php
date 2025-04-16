@@ -1,18 +1,19 @@
 <?php
-include ("../Config/Conexion.php");
+include("../Config/Conexion.php");
+include("../Config/Funciones.php");
 
-$categoria = $_POST['CategoriaP'];
-$marca = $_POST['MarcaP'];
-$precio = $_POST['Precio'];
-$descripcion = $_POST['descripcion'];
-$nombre = $_POST['nombre'];
+$categoria = limpiarCadena($_POST['CategoriaP']);
+$marca = limpiarCadena($_POST['MarcaP']);
+$precio = limpiarCadena($_POST['Precio']);
+$descripcion = limpiarCadena($_POST['descripcion']);
+$nombre = limpiarCadena($_POST['nombre']);
 
-$sql = "INSERT INTO productos (CategoriaId,MarcaId,Precio,DescripcionProducto,Nombre) VALUES('$categoria','$marca','$precio','$descripcion','$nombre')";
+$stmt = $conexion->prepare("INSERT INTO productos (CategoriaId, MarcaId, Precio, DescripcionProducto, Nombre) VALUES (?, ?, ?, ?, ?)");
+$stmt->bind_param("iisss", $categoria, $marca, $precio, $descripcion, $nombre);
 
-$resultado = mysqli_query($conexion, $sql);
-
-if($resultado === TRUE){
+if ($stmt->execute()) {
     header("location:../index.php");
 } else {
-    echo "Datos No Insertados";
+    echo "Datos No Insertados: " . $stmt->error;
 }
+?>

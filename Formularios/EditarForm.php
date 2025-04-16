@@ -18,9 +18,18 @@
         <?php
         include_once("../Config/Conexion.php");
 
-        $sql = "SELECT * FROM productos WHERE IdProducto = " . $_REQUEST['Id'];
-        $resultado = $conexion->query($sql);
+        $id = $_REQUEST['Id'];
+        
+        if (!ctype_digit($id)) {
+            die("ID inválido");
+        }
+
+        $stmt = $conexion->prepare("SELECT * FROM productos WHERE IdProducto = ?");
+        $stmt->bind_param("i", $id);
+        $stmt->execute();
+        $resultado = $stmt->get_result();
         $row = $resultado->fetch_assoc();
+
         ?>
 
         <input type="Hidden" class="form-control" name="Id" value="<?php echo $row['IdProducto']; ?>">
@@ -30,7 +39,7 @@
         <select class="form-select mb-3" aria-label="Default select example" name="Categorias">
             <option disabled>--Seleccione Categoría--</option>
             <?php
-            include ("../Config/Conexion.php");
+            include("../Config/Conexion.php");
             $sql1 = "SELECT * FROM categorias WHERE Id = " . $row['CategoriaId'];
             $resultado1 = $conexion->query($sql1);
             $row1 = $resultado1->fetch_assoc();
@@ -49,7 +58,7 @@
         <select class="form-select mb-3" aria-label="Default select example" name="Marcas">
             <option disabled>--Seleccione Marca--</option>
             <?php
-            include ("../Config/Conexion.php");
+            include("../Config/Conexion.php");
             $sql3 = "SELECT * FROM marcas WHERE id = " . $row['MarcaId'];
             $resultado3 = $conexion->query($sql3);
             $row3 = $resultado3->fetch_assoc();
@@ -70,7 +79,8 @@
 
         <div class="form-group">
             <label>Descripción</label>
-            <input type="text" class="form-control" name="Descripcion" value="<?php echo $row['DescripcionProducto'] ?>">
+            <input type="text" class="form-control" name="Descripcion"
+                value="<?php echo $row['DescripcionProducto'] ?>">
         </div>
 
         <div class="form-group">
@@ -88,4 +98,5 @@
 
     </form>
 </body>
+
 </html>

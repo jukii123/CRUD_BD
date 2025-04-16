@@ -1,26 +1,21 @@
 <?php
-
 include_once("../Config/Conexion.php");
+include("../Config/Funciones.php");
 
-$id = $_POST['Id'];
-$Categoria = $_POST['Categorias'];
-$Marcas = $_POST['Marcas'];
-$Precio = $_POST['Precio'];
-$Descripcion = $_POST['Descripcion'];
-$Nombre = $_POST['Nombre'];
+$id = limpiarCadena($_POST['Id']);
+$Categoria = limpiarCadena($_POST['Categorias']);
+$Marcas = limpiarCadena($_POST['Marcas']);
+$Precio = limpiarCadena($_POST['Precio']);
+$Descripcion = limpiarCadena($_POST['Descripcion']);
+$Nombre = limpiarCadena($_POST['Nombre']);
 
-$sql = "UPDATE productos SET 
-            CategoriaId = '$Categoria',
-            MarcaId = '$Marcas',
-            Precio = '$Precio',
-            DescripcionProducto = '$Descripcion',
-            Nombre = '$Nombre'
-        WHERE IdProducto = $id";
+$stmt = $conexion->prepare("UPDATE productos SET CategoriaId = ?, MarcaId = ?, Precio = ?, DescripcionProducto = ?, Nombre = ? WHERE IdProducto = ?");
+$stmt->bind_param("iisssi", $Categoria, $Marcas, $Precio, $Descripcion, $Nombre, $id);
 
-if ($conexion->query($sql)) {
+if ($stmt->execute()) {
     header("Location: ../index.php");
     exit();
 } else {
-    echo "Error al actualizar: " . $conexion->error;
+    echo "Error al actualizar: " . $stmt->error;
 }
 ?>
