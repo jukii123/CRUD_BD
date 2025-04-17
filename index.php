@@ -48,19 +48,21 @@
                         <td><?php echo $resultado['DescripcionProducto'] ?></td>
                         <td><?php echo $resultado['Nombre'] ?></td>
                         <td>
-                            <a href="Formularios/EditarForm.php?Id=<?php echo $resultado['IdProducto'] ?>"
-                                class="btn btn-warning">Editar</a>
+                            <!-- Botones de edición -->
+                            <a href="Formularios/EditarFormVulnerable.php?Id=<?php echo $resultado['IdProducto'] ?>"
+                                class="btn btn-warning btn-sm">Editar (Vulnerable)</a>
 
-                                <!-- Versión vulnerable -->
-                                <a href="#" 
-                                class="btn btn-danger delete-btn" 
+                            <a href="Formularios/EditarForm.php?Id=<?php echo $resultado['IdProducto'] ?>"
+                                class="btn btn-primary btn-sm">Editar (Seguro)</a>
+
+                            <!-- Botones de eliminación -->
+                            <a href="#" class="btn btn-danger btn-sm delete-btn"
                                 data-id="<?php echo $resultado['IdProducto'] ?>">Eliminar (Vulnerable)</a>
 
-                                <!-- Versión segura -->
-                                <a href="#" 
-                                class="btn btn-success delete-seguro-btn" 
+                            <a href="#" class="btn btn-success btn-sm delete-seguro-btn"
                                 data-id="<?php echo $resultado['IdProducto'] ?>">Eliminar (Seguro)</a>
                         </td>
+
 
                     </tr>
                     <?php
@@ -72,8 +74,13 @@
             </tbody>
         </table>
         <div class="container">
-            <a href="Formularios/AgregarForm.php" class="btn btn-warning btn-sm">Agregar Producto</a>
+            <!-- Botón agregar vulnerable -->
+            <a href="Formularios/AgregarFormVulnerable.php" class="btn btn-warning btn-sm">Agregar (Vulnerable)</a>
+
+            <!-- Botón agregar seguro -->
+            <a href="Formularios/AgregarForm.php" class="btn btn-primary btn-sm">Agregar (Seguro)</a>
         </div>
+
     </div>
 
 
@@ -83,77 +90,80 @@
         crossorigin="anonymous"></script>
 
     <!-- Modal para versión vulnerable -->
-    <div class="modal fade" id="confirmDeleteModalVulnerable" tabindex="-1" aria-labelledby="confirmDeleteModalLabelVulnerable" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-        <div class="modal-header">
-            <h5 class="modal-title" id="confirmDeleteModalLabelVulnerable">Confirmar Eliminación (Vulnerable)</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    <div class="modal fade" id="confirmDeleteModalVulnerable" tabindex="-1"
+        aria-labelledby="confirmDeleteModalLabelVulnerable" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="confirmDeleteModalLabelVulnerable">Confirmar Eliminación (Vulnerable)
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    ¿Estás seguro de que deseas eliminar este producto? (Versión vulnerable)
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <a id="confirmDeleteButtonVulnerable" class="btn btn-danger">Eliminar</a>
+                </div>
+            </div>
         </div>
-        <div class="modal-body">
-            ¿Estás seguro de que deseas eliminar este producto? (Versión vulnerable)
-        </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-            <a id="confirmDeleteButtonVulnerable" class="btn btn-danger">Eliminar</a>
-        </div>
-        </div>
-    </div>
     </div>
 
     <!-- Modal para versión segura -->
-    <div class="modal fade" id="confirmDeleteModalSeguro" tabindex="-1" aria-labelledby="confirmDeleteModalLabelSeguro" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-        <div class="modal-header">
-            <h5 class="modal-title" id="confirmDeleteModalLabelSeguro">Confirmar Eliminación (Segura)</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    <div class="modal fade" id="confirmDeleteModalSeguro" tabindex="-1" aria-labelledby="confirmDeleteModalLabelSeguro"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="confirmDeleteModalLabelSeguro">Confirmar Eliminación (Segura)</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    ¿Estás seguro de que deseas eliminar este producto? (Versión segura)
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <a id="confirmDeleteButtonSeguro" class="btn btn-success">Eliminar</a>
+                </div>
+            </div>
         </div>
-        <div class="modal-body">
-            ¿Estás seguro de que deseas eliminar este producto? (Versión segura)
-        </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-            <a id="confirmDeleteButtonSeguro" class="btn btn-success">Eliminar</a>
-        </div>
-        </div>
-    </div>
     </div>
 
     <script>
-    document.addEventListener('DOMContentLoaded', function() {
-    // Configuración para versión vulnerable
-    const deleteButtons = document.querySelectorAll('.delete-btn');
-    const confirmDeleteModalVulnerable = new bootstrap.Modal(document.getElementById('confirmDeleteModalVulnerable'));
-    const confirmDeleteButtonVulnerable = document.getElementById('confirmDeleteButtonVulnerable');
-    
-    deleteButtons.forEach(button => {
-        button.addEventListener('click', function(e) {
-            e.preventDefault();
-            const productId = this.getAttribute('data-id');
-            
-            confirmDeleteButtonVulnerable.href = `CRUD/EliminarDatosVulnerable.php?Id=${productId}`;
-            confirmDeleteModalVulnerable.show();
-        });
-    });
+        document.addEventListener('DOMContentLoaded', function () {
+            // Configuración para versión vulnerable
+            const deleteButtons = document.querySelectorAll('.delete-btn');
+            const confirmDeleteModalVulnerable = new bootstrap.Modal(document.getElementById('confirmDeleteModalVulnerable'));
+            const confirmDeleteButtonVulnerable = document.getElementById('confirmDeleteButtonVulnerable');
 
-    // Configuración para versión segura
-    const deleteSeguroButtons = document.querySelectorAll('.delete-seguro-btn');
-    const confirmDeleteModalSeguro = new bootstrap.Modal(document.getElementById('confirmDeleteModalSeguro'));
-    const confirmDeleteButtonSeguro = document.getElementById('confirmDeleteButtonSeguro');
-    
-    deleteSeguroButtons.forEach(button => {
-        button.addEventListener('click', function(e) {
-            e.preventDefault();
-            const productId = this.getAttribute('data-id');
-            
-            confirmDeleteButtonSeguro.href = `CRUD/EliminarDatosSeguro.php?Id=${productId}`;
-            confirmDeleteModalSeguro.show();
+            deleteButtons.forEach(button => {
+                button.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const productId = this.getAttribute('data-id');
+
+                    confirmDeleteButtonVulnerable.href = `CRUD/EliminarDatosVulnerable.php?Id=${productId}`;
+                    confirmDeleteModalVulnerable.show();
+                });
+            });
+
+            // Configuración para versión segura
+            const deleteSeguroButtons = document.querySelectorAll('.delete-seguro-btn');
+            const confirmDeleteModalSeguro = new bootstrap.Modal(document.getElementById('confirmDeleteModalSeguro'));
+            const confirmDeleteButtonSeguro = document.getElementById('confirmDeleteButtonSeguro');
+
+            deleteSeguroButtons.forEach(button => {
+                button.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const productId = this.getAttribute('data-id');
+
+                    confirmDeleteButtonSeguro.href = `CRUD/EliminarDatosSeguro.php?Id=${productId}`;
+                    confirmDeleteModalSeguro.show();
+                });
+            });
         });
-        });
-    });
     </script>
-    
+
 </body>
 
 </html>
