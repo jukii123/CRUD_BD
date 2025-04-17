@@ -1,10 +1,9 @@
 <?php
 include ("../Config/Conexion.php");
 
-// Versión segura usando consultas preparadas
 $Id = $_GET['Id'];
 
-if (!is_numeric($Id)) { // devemos validar que el Id sea numérico
+if (!is_numeric($Id)) { // debemos validar que el Id sea numérico
     die("ID inválido");
 }
 

@@ -1,10 +1,9 @@
 <?php
 include ("../Config/Conexion.php");
 
-// Versión deliberadamente vulnerable (con fines de demostración)
 $Id = $_GET['Id']; // Recibimos el parámetro sin sanitizar
 
-// Consulta vulnerable - concatenación directa
+// concatenación directa (mala práctica, vulnerable)
 $sql = "DELETE FROM productos WHERE IdProducto = '$Id'";
 
 $query = mysqli_query($conexion, $sql);

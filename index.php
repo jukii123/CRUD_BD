@@ -150,9 +150,9 @@
             confirmDeleteButtonSeguro.href = `CRUD/EliminarDatosSeguro.php?Id=${productId}`;
             confirmDeleteModalSeguro.show();
         });
+        });
     });
-});
-</script>
+    </script>
     
 </body>
 
