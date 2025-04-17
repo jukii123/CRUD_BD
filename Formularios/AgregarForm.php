@@ -10,7 +10,7 @@
     <h1 class="bg-black p-2 text-white text-center">Agregar producto</h1>
     <br>
     <div class="container">
-    <form action="../CRUD/insertarDatos" method="POST">
+    <form action="../CRUD/insertarDatos.php" method="POST">
         <label for="">Categorias</label>
         <select class="form-select mb-3" name="CategoriaP">
             <option selected disabled>--Seleccionar categoria--</option>
